@@ -1,7 +1,16 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
-using namespace std;
+
+int sumN(int);
+void find(int);
+
+int main(int argc, char const *argv[]) {
+	int N = 5;
+	int sum = sumN(N);
+	find(sum);
+
+	return 0;
+}
 
 int sumN(int x) {
 	int sum = 0;
@@ -12,37 +21,49 @@ int sumN(int x) {
 }
 
 void find(int sumN) {
-	vector<int> v;
-  v.push_back(1);
-  v.push_back(2);
-  v.push_back(5);
-  v.push_back(3);
-	vector<int>::iterator iter;
+	
+	std::vector<int> v{4, 5, 3};
+	std::vector<int> vF;
+	std::vector<int>::iterator iter_v;
+	std::vector<int>::iterator iter_vF;
+	
 	int _sum = 0;
-	
-	for(iter = v.begin(); iter != v.end(); iter++) {
-		cout << (*iter) << ' ';
-		_sum += (*iter);
+
+	for(iter_v = v.begin(); iter_v != v.end(); iter_v++) {
+		std::cout << (*iter_v) << ' ';
+		_sum += (*iter_v);
 	}
-	cout << endl;
+	std::cout << std::endl;
 
-	int delVal = sumN - _sum;
-	cout << "Deleted value: " << delVal << endl;
+	int sumDelVals = sumN - _sum;
+	int delValFst;
+	int delValSec;
 
-	v.push_back(delVal);
+	for(int i = (sumDelVals/2); i != 0; i--)
+		vF.push_back(i);
 
-	for(iter = v.begin(); iter != v.end(); iter++)
 
-		cout << (*iter) << ' ';
+	for(iter_vF = vF.begin(); iter_vF != vF.end(); iter_vF++) {
+		
+		for(iter_v = v.begin(); iter_v != v.end(); iter_v++) {
+			
+			if( (*iter_vF) == (*iter_v) ) {
+				vF.erase( iter_vF );
+			} else {
+				delValFst = (*iter_vF);
+			}
+		}
+	}
 
-	cout << endl;
-}
+	delValSec = sumDelVals - delValFst;
 
-int main() {
+	std::cout << "Deleted values: " << delValFst << " \'n\' " << delValSec << std::endl;
 
-	int N = 5;
-	int sum = sumN(N);
-	find(sum);
-	return 0;
-	
+	v.push_back(delValFst);
+	v.push_back(delValSec);
+
+	for(iter_v = v.begin(); iter_v != v.end(); iter_v++)
+		std::cout << (*iter_v) << ' ';
+
+	std::cout << std::endl;
 }
